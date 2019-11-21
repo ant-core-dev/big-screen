@@ -6,8 +6,8 @@ function dbconnect() {
     //FIXME: Move to config.php, don't store username, and password    
     $config = array(
         'DB_DNS' => 'mysql:host=localhost;port=3306;dbname=bigscreen;',
-        'DB_USER' => 'root',
-        'DB_PASSWORD' => 'Ranallo10'
+        'DB_USER' => '',
+        'DB_PASSWORD' => ''
     );
     
     try {
