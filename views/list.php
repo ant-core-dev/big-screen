@@ -6,18 +6,18 @@ error_reporting(E_ALL);
 require_once('header.php');
 require_once('../models/Movies_model.php');
 
-//$movies = new Movies_model();
-//$data = $movies->list();
-$data = ['data'=>'required']
+$movies = new Movies_model();
+$data = $movies->list();
 
 ?>
-    <!--TODO: Add Content -->
-    <div class="container-fluid"> 
-        <h2>Movies</h2>
-        <?php
-            //print_r($data);        
-        ?>
-        <br/>
+    <br>
+    <div class="container-fluid" style="padding-top:95px;"> 
+        <div class="row">
+            <div class="col-sm-6">
+				<h2>Movies</h2>
+			</div>        
+        </div>
+        
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -29,43 +29,30 @@ $data = ['data'=>'required']
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>John Wick</td>
-                    <td>Streaming</td>
-                    <td>1 Hour 25 Minutes</td>
-                    <td>2017</td>
-                    <td>            
-                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-        	            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>                        
-                    </td>
-                </tr>
-                <tr>
-                    <td>John Wick II</td>
-                    <td>Streaming</td>
-                    <td>2 Hours</td>
-                    <td>2018</td>
-                    <td>
-                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-        	            <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>                        
-                    </td>
-                </tr>
-                <tr>
-                    <td>Avengers</td>
-                    <td>DVD</td>
-                    <td>3 Hours</td>
-                    <td>2018</td>                    
-                    <td>
-                    <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                    <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                    <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                    <span class="float-right"><i class="text-warning fa fa-star"></i></span>                                                                                    
-                    </td>
-                </tr>            
+                <?php foreach ($data as $row): ?>
+                    <tr>
+                    <?php foreach ($row as $key=>$value):
+                        if ($key == 'id'){
+                            $id = $value;
+                            continue;
+                        }
+                        if ($key == 'run_length') {
+                            $output = sprintf("%d min", $value);
+                        } else if ($key == 'rating') {
+                                $output = "";
+                                while ($value > 0) {
+                                    $value--;
+                                    $output.='<span class="float-right"><i class="text-warning fa fa-star"></i></span>';
+                                }
+                        } else {
+                            $output = $value;
+                        }
+
+                    ?>
+                         <td><?= $output ?></td>
+                     <?php endforeach;?>
+                    </tr>
+                <?php endforeach;?>          
             </tbody>
         </table>
 

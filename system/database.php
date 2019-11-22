@@ -5,7 +5,7 @@ require_once('../system/config.php');
 function dbconnect() {
     //FIXME: Move to config.php, don't store username, and password    
     $config = array(
-        'DB_DNS' => 'mysql:host=localhost;port=3306;dbname=bigscreen;',
+        'DB_DNS' => 'mysql:host=127.0.0.1;port=3306;dbname=bigscreen;',
         'DB_USER' => 'root',
         'DB_PASSWORD' => 'Ranallo10'
     );

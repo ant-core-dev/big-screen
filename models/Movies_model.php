@@ -8,7 +8,6 @@ class Movies_model {
     public function __construct()
     {
         $this->db = dbconnect();
-        var_dump($this->db); die();
     }    
 
     /**
@@ -30,7 +29,7 @@ class Movies_model {
         } else {
             $orderBy = "title";
         }
-
+;
         $sql .= " ORDER BY $orderBy";
         $stmt = $this->db->prepare($sql);
 
