@@ -2,8 +2,9 @@
 require_once('header.php');
 ?>
 
-    <!--TODO: Add Content -->
+
     <div class="container" style="text-align: left"> 
+        
         <h2>Add</h2>
         <form name="addMovie" class="requires-validation" novalidate action="#" method="POST">
             <div class="form-group row">
