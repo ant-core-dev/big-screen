@@ -10,7 +10,6 @@ $movies = new Movies_model();
 $data = $movies->list();
 
 ?>
-    <br>
     <div class="container-fluid" style="padding-top:95px;"> 
         <div class="table-wrapper">
         <div class="row">
@@ -62,7 +61,7 @@ $data = $movies->list();
                      <td>
                         <a href="view.php?id=<?=$id?>" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
                         <a href="edit.php?id=<?=$id?>" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                        <a href="#deleteMovieModal" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>                        </td>                         
+                        <a href="#deleteMovieModal" class="delete" title="Delete" data-toggle="modal" data-row-id=<?=$id?>><i class="material-icons">&#xE872;</i></a>                        </td>                         
                      </td>
                     </tr>
                 <?php endforeach;?>          
@@ -84,13 +83,41 @@ $data = $movies->list();
 						<p>Are you sure you want to delete this movie?</p>
 						<p class="text-warning"><small>This action cannot be undone.</small></p>
 					</div>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-danger" value="Delete">
+					<div class="modal-footer actions">
+                        <input type="hidden" name="movie_id" value=""/>
+						<input type="button" class="btn btn-outline-primary" data-dismiss="modal" value="Cancel">
+						<input type="submit" class="btn btn-primary" value="Delete Movie">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#deleteMovieModal')
+                .on('show.bs.modal', function(e) {
+                    var id = $(e.relatedTarget).data('row-id');
+                    $(e.currentTarget).find('input[name="movie_id"]').val(id);
+                })
+                .on('submit', function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        method: "POST",
+                        url: "delete.php",
+                        data: {
+                            id: $(e.currentTarget).find('input[name="movie_id"]').val()
+                        }
+                    })
+                    .done(function (response) {
+                        console.log(response);
+                        if (response.success) {
+                            window.location('list.php');
+                        }
+                        $('#deleteMovieModal').modal('hide');                       
+                    }); 
+                });
+            
+        });
+    </script>  
     </body>
 </html>

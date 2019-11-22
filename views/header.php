@@ -25,35 +25,35 @@
             box-shadow: 0 1px 1px rgba(0,0,0,.05);
         } 
         table.table th i {
-        font-size: 13px;
-        margin: 0 5px;
-        cursor: pointer;
-    }
-    table.table td:last-child {
-        width: 130px;
-    }        
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        table.table td:last-child {
+            width: 130px;
+        }        
         table.table td a {
-        color: #a0a5b1;
-        display: inline-block;
-        margin: 0 5px;
-    }
-	table.table td a.view {
-        color: #03A9F4;
-    }
-    table.table td a.edit {
-        color: #FFC107;
-    }
-    table.table td a.delete {
-        color: #E34724;
-    }
-    table.table td i {
-        font-size: 19px;
-    }               
-    </style> 
+            color: #a0a5b1;
+            display: inline-block;
+            margin: 0 5px;
+        }
+        table.table td a.view {
+            color: #03A9F4;
+        }
+        table.table td a.edit {
+            color: #FFC107;
+        }
+        table.table td a.delete {
+            color: #E34724;
+        }
+        table.table td i {
+            font-size: 19px;
+        }               
+        </style> 
     <script type="text/javascript">
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>    
   </head>
   <body>
