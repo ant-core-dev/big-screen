@@ -21,20 +21,21 @@ class Movies_model {
      */
 
      // TODO: Implement pagination and limit
-    public function list($order = 'title', $offset = 1, $limit = 25) {
+    public function list($order = 2, $offset = 1, $limit = 25) {
         $sql = "SELECT id, title, delivery_format, run_length, release_year, rating FROM bigscreen.movies";
         
         if ($order) {
-            $orderBy = $order;
+            $orderBy = $order + 1;
         } else {
-            $orderBy = "title";
+            $orderBy = 2;
         }
-        $sql .= " ORDER BY :orderBy LIMIT :offset, :limit";
+        $sql .= " ORDER BY $orderBy LIMIT :offset, :limit";
+
         $stmt = $this->db->prepare($sql);
         $params = array(
             ":limit" => $limit,
             ":offset" => $offset,
-            ":orderBy" => $orderBy
+            //":orderBy" => $orderBy
         );
 
         $results = array();

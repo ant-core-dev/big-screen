@@ -9,15 +9,17 @@ require_once('../helpers/view_helpers.php');
 
 $movies = new Movies_model();
 $data = [];
-$columns = ['title','display_format','run_length','released','rating'];
 
 if (isGetRequest()) {
-    $sortBy = filter_input(INPUT_GET, 'sort', FILTER_SANITIZE_STRING);
-    $orderBy = in_array($sortBy, $columns) ? $sortBy : $columns[0];
+    
+    $sort = filter_input(INPUT_GET, 'sort', FILTER_SANITIZE_NUMBER_INT);
+    $orderBy = $sort ? $sort : 1;
     $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
     $offset = $page ? $page : 1;
+    $limit = filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT);
+    $records = $limit ? $limit : 10;
 
-    $data = $movies->list($sortBy, $offset);
+    $data = $movies->list($orderBy, $offset, $records);
 }
 
 ?>
@@ -37,11 +39,11 @@ if (isGetRequest()) {
         <table class="table table-striped table-hover movies">
             <thead class="thead-dark">
                 <tr>
-                    <th class="sort" data-sort="title">Title <i class="fa fa-sort"></i></th>
-                    <th class="sort" data-sort="display_format">Format <i class="fa fa-sort"></i></th>
-                    <th class="sort" data-sort="run_length">Run Length <i class="fa fa-sort"></i></th>
-                    <th class="sort" data-sort="released">Released <i class="fa fa-sort"></i></th>
-                    <th class="sort" data-sort="rating">Rating <i class="fa fa-sort"></i></th>  
+                    <th class="sort" data-sort="1">Title <i class="fa fa-sort"></i></th>
+                    <th class="sort" data-sort="2">Format <i class="fa fa-sort"></i></th>
+                    <th class="sort" data-sort="3">Run Length <i class="fa fa-sort"></i></th>
+                    <th class="sort" data-sort="4">Released <i class="fa fa-sort"></i></th>
+                    <th class="sort" data-sort="5">Rating <i class="fa fa-sort"></i></th>  
                     <th>Actions</th>                  
                 </tr>
             </thead>
