@@ -45,6 +45,7 @@ class Movies_model {
         return $results;            
     }
 
+
     /**
      * Insert moves
      * 
@@ -54,6 +55,7 @@ class Movies_model {
      */
     public function persist($data) {
 
+        //TODO: if the title of the movie exists => update the record 
         $sql = "INSERT INTO bigscreen.movies (title, delivery_format, run_length, release_year, rating) 
             VALUES (:title, :delivery_format, :run_length, :release_year, :rating)";
 
@@ -75,6 +77,69 @@ class Movies_model {
         return $result;
 
     }
+
+    /**
+     * Get movie by id
+     * 
+     * @param int $id The id of the movie to return
+     * 
+     * @return array $results Array list of movies
+     */
+    public function get($id) {
+        $sql = "SELECT id, title, delivery_format, run_length, release_year, rating FROM bigscreen.movies WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt = $this->db->prepare($sql);
+        $params = array(
+            ":limit" => $limit,
+            ":offset" => $offset,
+            ":orderBy" => $orderBy
+        );
+
+        $results = array();
+        if ($stmt->execute($params) && $stmt->rowCount() > 0) {
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        return $results;         
+    }
+
+    /**
+     * Update a movie
+     * 
+     * @param mixed $data Movie data being updated
+     * 
+     * @return bool True if successful or false if failed
+     */
+    public function update($data) {
+        $sql = "UPDATE bigscreen.movies 
+            SET 
+                title = :title,
+                delivery_format = :delivery_format, 
+                run_length = :run_length, 
+                release_year = :release_year, 
+                rating = :rating
+            WHERE id = :id";
+
+        $stmt = $this->db->prepare($sql);
+
+        $result = false;
+        $params = array(
+            ":id" => $data['id'],
+            ":title" => $data['title'],
+            ":delivery_format" => $data['delivery_format'],
+            ":run_length" => $data['run_length'],
+            ":release_year" => $data['release_year'],
+            ":rating" => $data['rating'],                                                
+        );
+
+        if ($stmt->execute($params) && $stmt->rowCount() > 0){
+            $result = true;
+        }
+        
+        return $result;
+
+    }
+
 
     /**
      * Delete a movie 

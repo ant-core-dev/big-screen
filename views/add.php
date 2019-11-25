@@ -3,6 +3,7 @@ require_once('header.php');
 require_once('../models/Movies_model.php');
 
 $origin = "/";
+$data['message'] = "";
 
 function isPostRequest() {
     return filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST';
@@ -139,14 +140,19 @@ if (isPostRequest()) {
 
         $movies = new Movies_model();
         $result = $movies->persist($data);
-    }
+
+        $data['message'] = '<div class="alert alert-success" role="alert"><i class="fa fa-check-circle-o fa-2x"></i> Added Movie Successfully!</div>';
+    } 
 }
 
 ?>
 
 
     <div class="container" style="padding-top:95px;"> 
-        <div class="view-wrapper">        
+        <div class="view-wrapper">   
+            <div class="col-sm-10 col-sm-offset-2 flash-message">
+                <?php echo $data['message']; ?>    
+            </div>     
         <h2>Add Movie</h2>
         <form name="addMovie" class="requires-validation" novalidate action="add.php" method="POST">
             <div class="form-group row">
