@@ -90,17 +90,15 @@ class Movies_model {
         $stmt = $this->db->prepare($sql);
         $stmt = $this->db->prepare($sql);
         $params = array(
-            ":limit" => $limit,
-            ":offset" => $offset,
-            ":orderBy" => $orderBy
+            ":id" => $id
         );
 
-        $results = array();
+        $results = false;
         if ($stmt->execute($params) && $stmt->rowCount() > 0) {
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        return $results;         
+        return $results ? $results[0] : $results;  
     }
 
     /**

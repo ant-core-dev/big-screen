@@ -5,10 +5,7 @@ error_reporting(E_ALL);
 
 require_once('header.php');
 require_once('../models/Movies_model.php');
-
-function isGetRequest() {
-    return filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'GET';
-}
+require_once('../helpers/view_helpers.php');
 
 $movies = new Movies_model();
 $data = [];
@@ -56,14 +53,11 @@ if (isGetRequest()) {
                             $id = $value;
                             continue;
                         }
+                        $output = "";   
                         if ($key == 'run_length') {
-                            $output = sprintf("%d min", $value);
+                            $output = formatRunLength($value);
                         } else if ($key == 'rating') {
-                                $output = "";
-                                while ($value > 0) {
-                                    $value--;
-                                    $output.='<span class="float-right"><i class="text-warning fa fa-star"></i></span>';
-                                }
+                            $output = formatRatingStars($value);
                         } else {
                             $output = $value;
                         }

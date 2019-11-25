@@ -1,23 +1,10 @@
 <?php
 require_once('header.php');
 require_once('../models/Movies_model.php');
+require_once('../helpers/view_helpers.php');
 
 $origin = "/";
 $data['message'] = "";
-
-function isPostRequest() {
-    return filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST';
-}
-
-// TODO: Handle Bool Input
-function sanitize($variable, $field) {
-    $filter = $field['validation']['filters'];
-    $sanitized = filter_input(INPUT_POST, $variable, $filter);  
-    if ($sanitized == NULL) {
-        return false;
-    }
-    return $sanitized;
-}
 
 function validate(&$fields) {
     $isValid = true;
