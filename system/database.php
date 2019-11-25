@@ -7,13 +7,13 @@ function dbconnect() {
     $config = array(
         'DB_DNS' => 'mysql:host=127.0.0.1;port=3306;dbname=bigscreen;',
         'DB_USER' => 'root',
-        'DB_PASSWORD' => 'Ranallo10'
+        'DB_PASSWORD' => 'anth0ny'
     );
 
     try {
         $db = new PDO($config['DB_DNS'], $config['DB_USER'], $config['DB_PASSWORD']);
         $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        $db->setAttribute(PDO::ERRMODE_EXCEPTION, true);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (Exception $ex) {
         var_dump($ex);
         echo $ex->getMessage();

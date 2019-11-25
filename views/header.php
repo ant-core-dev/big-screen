@@ -18,13 +18,13 @@
             font-family: 'Varela Round', sans-serif;
             font-size: 13px;
         }
-        .table-wrapper {
+        .table-wrapper, .view-wrapper {
             background: #fff;
             padding: 20px;
             margin: 30px 0;
             box-shadow: 0 1px 1px rgba(0,0,0,.05);
         } 
-        table.table th i {
+        table.table th, table.table th i {
             font-size: 13px;
             margin: 0 5px;
             cursor: pointer;

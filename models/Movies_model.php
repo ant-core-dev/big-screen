@@ -21,7 +21,7 @@ class Movies_model {
      */
 
      // TODO: Implement pagination and limit
-    public function list($order = 'title', $page = 1, $limit = 25) {
+    public function list($order = 'title', $offset = 1, $limit = 25) {
         $sql = "SELECT id, title, delivery_format, run_length, release_year, rating FROM bigscreen.movies";
         
         if ($order) {
@@ -29,14 +29,18 @@ class Movies_model {
         } else {
             $orderBy = "title";
         }
-;
-        $sql .= " ORDER BY $orderBy";
+        $sql .= " ORDER BY :orderBy LIMIT :offset, :limit";
         $stmt = $this->db->prepare($sql);
+        $params = array(
+            ":limit" => $limit,
+            ":offset" => $offset,
+            ":orderBy" => $orderBy
+        );
 
-         $results = array();
-         if ($stmt->execute() && $stmt->rowCount() > 0) {
-             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-         }
+        $results = array();
+        if ($stmt->execute($params) && $stmt->rowCount() > 0) {
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
 
         return $results;            
     }
@@ -50,11 +54,11 @@ class Movies_model {
      */
     public function persist($data) {
 
-        $sql = "INSERT INTO bigscreen.movies ('title', 'delivery_format', 'run_length', 'release_year', 'rating') 
+        $sql = "INSERT INTO bigscreen.movies (title, delivery_format, run_length, release_year, rating) 
             VALUES (:title, :delivery_format, :run_length, :release_year, :rating)";
 
         $stmt = $this->db->prepare($sql);
-    
+
         $result = false;
         $params = array(
             ":title" => $data['title'],
@@ -63,7 +67,7 @@ class Movies_model {
             ":release_year" => $data['release_year'],
             ":rating" => $data['rating'],                                                
         );
-    
+
         if ($stmt->execute($params) && $stmt->rowCount() > 0){
             $result = $this->db->lastInsertId();
         }

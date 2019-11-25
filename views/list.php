@@ -23,14 +23,14 @@ $data = $movies->list();
             </div>                 
         </div>
         
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover movies">
             <thead class="thead-dark">
                 <tr>
-                    <th>Title <i class="fa fa-sort"></i></th>
-                    <th>Format <i class="fa fa-sort"></i></th>
-                    <th>Run Length <i class="fa fa-sort"></i></th>
-                    <th>Released <i class="fa fa-sort"></i></th>
-                    <th>Rating <i class="fa fa-sort"></i></th>  
+                    <th class="sort" data-sort="title">Title <i class="fa fa-sort"></i></th>
+                    <th class="sort" data-sort="display_format">Format <i class="fa fa-sort"></i></th>
+                    <th class="sort" data-sort="run_length">Run Length <i class="fa fa-sort"></i></th>
+                    <th class="sort" data-sort="released">Released <i class="fa fa-sort"></i></th>
+                    <th class="sort" data-sort="rating">Rating <i class="fa fa-sort"></i></th>  
                     <th>Actions</th>                  
                 </tr>
             </thead>
@@ -94,6 +94,9 @@ $data = $movies->list();
 	</div>
     <script type="text/javascript">
         $(document).ready(function(){
+            $('.movies')
+                .on('click', '.sort', onSortClick);
+
             $('#deleteMovieModal')
                 .on('show.bs.modal', function(e) {
                     var id = $(e.relatedTarget).data('row-id');
@@ -116,6 +119,11 @@ $data = $movies->list();
                         $('#deleteMovieModal').modal('hide');                       
                     }); 
                 });
+
+            function onSortClick(e) {
+                console.log( $(e.currentTarget).data('sort'));
+                    //TODO: Call sort
+            }
             
         });
     </script>  
