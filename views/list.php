@@ -6,8 +6,22 @@ error_reporting(E_ALL);
 require_once('header.php');
 require_once('../models/Movies_model.php');
 
+function isGetRequest() {
+    return filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'GET';
+}
+
 $movies = new Movies_model();
-$data = $movies->list();
+$data = [];
+$columns = ['title','display_format','run_length','released','rating'];
+
+if (isGetRequest()) {
+    $sortBy = filter_input(INPUT_GET, 'sort', FILTER_SANITIZE_STRING);
+    $orderBy = in_array($sortBy, $columns) ? $sortBy : $columns[0];
+    $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
+    $offset = $page ? $page : 1;
+
+    $data = $movies->list($sortBy, $offset);
+}
 
 ?>
     <div class="container-fluid" style="padding-top:95px;"> 
@@ -121,8 +135,7 @@ $data = $movies->list();
                 });
 
             function onSortClick(e) {
-                console.log( $(e.currentTarget).data('sort'));
-                    //TODO: Call sort
+                window.location.href = "list.php?sort="+$(e.currentTarget).data('sort');
             }
             
         });
